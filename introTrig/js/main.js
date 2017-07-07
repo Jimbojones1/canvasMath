@@ -7,32 +7,35 @@ var canvas = document.getElementById("canvas"),
 ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
 ctx.shadowOffsetX = Math.random() * 2;
 ctx.shadowOffsetY = 2;
-ctx.shadowBlur    = 8;
+ctx.shadowBlue    = 8;
 
 var circles = [],
-    min     = 5,
-    max     = 70;
+    min     = 10,
+    max     = 50;
 
 draw()
-
+var counter =0
 function draw(){
   var c = createCircle()
-  var counter = 0;
+
   while(!isValid(c)){
 
     c.x =  2  * Math.random() * width;
-    c.y = Math.random() * height;
-    counter++;
-    if(counter > 30000){
-      return;
+    c.y = Math.random() * height
+       counter++;
+      if(counter > 500){
+      return
     }
+
   }
+
+
 
   while(isValid(c)){
     // increase it up intil the point it hits another circle
     c.r++
   }
-   c.r = c.r - 5;
+   c.r -= 1;
   circles.push(c)
   drawCircle(c)
   requestAnimationFrame(draw)
@@ -43,9 +46,7 @@ function isValid(c){
   if(c.r > max){
     return false
   }
-  else if(c.r < min){
-    return false
-  }
+
 
   for(var i = 0; i < circles.length; i++){
     var c2 = circles[i];
@@ -54,9 +55,10 @@ function isValid(c){
     dx = c2.x - c.x;
     dy = c2.y - c.y;
     dist = Math.sqrt(dx * dx + dy * dy)
+
     // if the distance of the radi is less then the sum of the radius(aka diameter)
     // then they are touching
-    if(dist < c2.r + c.r + 1){
+    if(dist < c2.r + c.r + 4){
       return false;
     }
   }
@@ -81,9 +83,7 @@ function randColor(){
 
 function drawCircle(c){
   ctx.beginPath();
-  if(c.r > max * 0.5){
-    return false
-  }
+  console.log(c.r)
   var grd = ctx.createRadialGradient(c.x/4, c.y/4, c.y /3, c.x * 1.5, c.y / 10, c.r * 80);
   grd.addColorStop(0, randColor());
   // grd.addColorStop(1, randColor());
