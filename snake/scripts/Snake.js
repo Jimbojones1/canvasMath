@@ -6,7 +6,7 @@ function Snake(){
 
   this.eat = function(posVector){
     const d = dist(this.x, this.y, posVector.x, posVector.y)
-    if (d < 1) return true
+    if (d < 1) return true;
   }
 
   this.update = function (){
